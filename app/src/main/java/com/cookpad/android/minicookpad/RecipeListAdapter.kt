@@ -6,21 +6,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cookpad.android.minicookpad.databinding.ListitemRecipeBinding
-import com.cookpad.android.minicookpad.datasource.RecipeEntity
+import com.cookpad.android.minicookpad.scene.recipelist.RecipeListContract
 import com.google.firebase.storage.FirebaseStorage
 
 typealias OnRecipeClickListener = (String, String) -> Unit
 
 class RecipeListAdapter(
-    private val onRecipeClickListener: OnRecipeClickListener
+        private val onRecipeClickListener: OnRecipeClickListener
 ) : RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder>() {
 
-    private var recipeList: List<RecipeEntity> = mutableListOf()
+    private var recipeList: List<RecipeListContract.Recipe> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val binding = ListitemRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecipeViewHolder(
-            binding
+                binding
         )
     }
 
@@ -31,52 +31,50 @@ class RecipeListAdapter(
     override fun getItemCount(): Int = recipeList.size
 
     override fun getItemViewType(position: Int): Int =
-        R.layout.listitem_recipe
+            R.layout.listitem_recipe
 
-    fun update(recipeList: List<RecipeEntity>) {
+    fun update(recipeList: List<RecipeListContract.Recipe>) {
         DiffUtil
-            .calculateDiff(
-                RecipeDiffCallback(
-                    this.recipeList,
-                    recipeList
+                .calculateDiff(
+                        RecipeDiffCallback(
+                                this.recipeList,
+                                recipeList
+                        )
                 )
-            )
-            .dispatchUpdatesTo(this)
+                .dispatchUpdatesTo(this)
         this.recipeList = recipeList
     }
 
     class RecipeViewHolder(
-        private val binding: ListitemRecipeBinding
+            private val binding: ListitemRecipeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         private val context = binding.root.context
 
-        fun bind(recipe: RecipeEntity, onRecipeClickListener: OnRecipeClickListener) {
+        fun bind(recipe: RecipeListContract.Recipe, onRecipeClickListener: OnRecipeClickListener) {
             binding.root.setOnClickListener {
-                recipe.id?.let { id -> onRecipeClickListener.invoke(id, recipe.title) }
+                onRecipeClickListener.invoke(recipe.id, recipe.title)
             }
             binding.title.text = recipe.title
             binding.authorName.text = "by ${recipe.authorName}"
-            recipe.imagePath?.let { path ->
-                Glide.with(context)
-                    .load(FirebaseStorage.getInstance().reference.child(path))
+            Glide.with(context)
+                    .load(FirebaseStorage.getInstance().reference.child(recipe.imagePath))
                     .into(binding.image)
-            }
-            binding.steps.text = recipe.steps.joinToString("、")
+            binding.steps.text = recipe.steps
         }
     }
 
     class RecipeDiffCallback(
-            private val oldList: List<RecipeEntity>,
-            private val newList: List<RecipeEntity>
+            private val oldList: List<RecipeListContract.Recipe>,
+            private val newList: List<RecipeListContract.Recipe>
     ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int = oldList.size
 
         override fun getNewListSize(): Int = newList.size
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldList[oldItemPosition].javaClass == newList[newItemPosition].javaClass
+                oldList[oldItemPosition].javaClass == newList[newItemPosition].javaClass
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldList[oldItemPosition].id == newList[newItemPosition].id
+                oldList[oldItemPosition].id == newList[newItemPosition].id
     }
 }

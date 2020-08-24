@@ -9,20 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cookpad.android.minicookpad.databinding.FragmentRecipeListBinding
-import com.cookpad.android.minicookpad.datasource.RecipeEntity
-import com.google.firebase.firestore.FirebaseFirestore
+import com.cookpad.android.minicookpad.datasource.FirebaseRecipeDataSource
+import com.cookpad.android.minicookpad.scene.recipelist.RecipeListContract
+import com.cookpad.android.minicookpad.scene.recipelist.RecipeListInteractor
+import com.cookpad.android.minicookpad.scene.recipelist.RecipeListPresenter
 
-class RecipeListFragment : Fragment() {
+class RecipeListFragment : Fragment(), RecipeListContract.View {
     private lateinit var binding: FragmentRecipeListBinding
 
     private lateinit var adapter: RecipeListAdapter
 
-    private val db = FirebaseFirestore.getInstance()
+    private lateinit var presenter: RecipeListPresenter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecipeListBinding.inflate(inflater, container, false)
         return binding.root
@@ -30,20 +32,23 @@ class RecipeListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        presenter = RecipeListPresenter(this, RecipeListInteractor(FirebaseRecipeDataSource()))
+        presenter.onRecipeListRequested()
+
         adapter = RecipeListAdapter { recipeId, recipeName ->
             findNavController()
-                .navigate(RecipeListFragmentDirections.showRecipeDetail(recipeId, recipeName))
+                    .navigate(RecipeListFragmentDirections.showRecipeDetail(recipeId, recipeName))
         }.also { binding.recipeList.adapter = it }
         binding.recipeList.layoutManager = LinearLayoutManager(requireContext())
         binding.createButton.setOnClickListener { findNavController().navigate(R.id.createRecipe) }
+    }
 
-        db.collection("recipes")
-            .get()
-            .addOnSuccessListener { result ->
-                adapter.update(result.mapNotNull { RecipeEntity.fromDocument(it) })
-            }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "レシピ一覧の取得に失敗しました", Toast.LENGTH_SHORT).show()
-            }
+    override fun renderRecipeList(recipeList: List<RecipeListContract.Recipe>) {
+        adapter.update(recipeList)
+    }
+
+    override fun renderError(throwable: Throwable) {
+        Toast.makeText(requireContext(), "レシピ一覧の取得に失敗しました", Toast.LENGTH_SHORT).show()
     }
 }
