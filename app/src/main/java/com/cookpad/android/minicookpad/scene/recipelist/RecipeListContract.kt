@@ -12,9 +12,12 @@ interface RecipeListContract {
 
     interface Presenter {
         fun onRecipeListRequested()
+        fun onRecipeDetailRequested(recipeId: String, recipeName: String)
     }
 
-    interface Routing
+    interface Routing {
+        fun navigateRecipeDetail(recipeId: String, recipeName: String)
+    }
 
     data class Recipe(
         val id: String,

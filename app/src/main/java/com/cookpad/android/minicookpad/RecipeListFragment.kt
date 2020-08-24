@@ -13,6 +13,7 @@ import com.cookpad.android.minicookpad.datasource.FirebaseRecipeDataSource
 import com.cookpad.android.minicookpad.scene.recipelist.RecipeListContract
 import com.cookpad.android.minicookpad.scene.recipelist.RecipeListInteractor
 import com.cookpad.android.minicookpad.scene.recipelist.RecipeListPresenter
+import com.cookpad.android.minicookpad.scene.recipelist.RecipeListRouting
 
 class RecipeListFragment : Fragment(), RecipeListContract.View {
     private lateinit var binding: FragmentRecipeListBinding
@@ -33,12 +34,15 @@ class RecipeListFragment : Fragment(), RecipeListContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = RecipeListPresenter(this, RecipeListInteractor(FirebaseRecipeDataSource()))
+        presenter = RecipeListPresenter(
+                view = this,
+                interactor = RecipeListInteractor(FirebaseRecipeDataSource()),
+                routing = RecipeListRouting(this)
+        )
         presenter.onRecipeListRequested()
 
         adapter = RecipeListAdapter { recipeId, recipeName ->
-            findNavController()
-                    .navigate(RecipeListFragmentDirections.showRecipeDetail(recipeId, recipeName))
+            presenter.onRecipeDetailRequested(recipeId, recipeName)
         }.also { binding.recipeList.adapter = it }
         binding.recipeList.layoutManager = LinearLayoutManager(requireContext())
         binding.createButton.setOnClickListener { findNavController().navigate(R.id.createRecipe) }
