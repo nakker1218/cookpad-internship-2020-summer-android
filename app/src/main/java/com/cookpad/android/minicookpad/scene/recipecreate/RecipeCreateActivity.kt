@@ -1,19 +1,26 @@
-package com.cookpad.android.minicookpad
+package com.cookpad.android.minicookpad.scene.recipecreate
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.cookpad.android.minicookpad.RecipeCreateViewModel
 import com.cookpad.android.minicookpad.databinding.ActivityRecipeCreateBinding
+import com.cookpad.android.minicookpad.datasource.FirebaseImageDataSource
+import com.cookpad.android.minicookpad.datasource.FirebaseRecipeDataSource
 
-class RecipeCreateActivity : AppCompatActivity() {
+class RecipeCreateActivity : AppCompatActivity(), RecipeCreateContract.View {
     private lateinit var binding: ActivityRecipeCreateBinding
+
+    private lateinit var presenter: RecipeCreateContract.Presenter
 
     private val viewModel: RecipeCreateViewModel by viewModels()
 
@@ -23,7 +30,7 @@ class RecipeCreateActivity : AppCompatActivity() {
                 Glide.with(this)
                     .load(imageUri)
                     .into(binding.image)
-                viewModel.updateImageUri(imageUri.toString())
+                viewModel.updateImageUri(imageUri)
             }
         }
     }
@@ -38,19 +45,45 @@ class RecipeCreateActivity : AppCompatActivity() {
             setHomeButtonEnabled(true)
         }
 
+        presenter = RecipeCreatePresenter(
+            view = this,
+            interactor = RecipeCreateInteractor(
+                FirebaseImageDataSource(),
+                FirebaseRecipeDataSource()
+            ),
+            routing = RecipeCreateRouting(this)
+        )
+
         binding.image.setOnClickListener {
             launcher.launch(null)
+        }
+
+        binding.saveButton.setOnClickListener {
+            val recipe = RecipeCreateContract.Recipe(
+                imageUri = viewModel.imageUri.value ?: return@setOnClickListener,
+                title = binding.title.text.toString(),
+                steps = listOf(
+                    binding.step1.text.toString(),
+                    binding.step2.text.toString(),
+                    binding.step3.text.toString()
+                )
+            )
+            presenter.onRecipeSaveRequested(recipe)
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun renderError() {
+        Toast.makeText(this, "レシピの追加に失敗しました", Toast.LENGTH_SHORT).show()
     }
 
     class ImageSelector : ActivityResultContract<Unit, Uri?>() {
