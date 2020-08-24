@@ -23,13 +23,13 @@ class RecipeListInteractorTest {
     fun verifyFetchRecipeListSuccess() {
         val onSuccess: (List<RecipeListContract.Recipe>) -> Unit = mock()
         val recipeList = listOf(
-                RecipeEntity(
-                        id = "xxx",
-                        title = "美味しいきゅうりの塩もみ",
-                        imagePath = "images/recipe.png",
-                        steps = listOf("きゅうりを切る", "塩をまく", "もむ"),
-                        authorName = "クックパド美"
-                )
+            RecipeEntity(
+                id = "xxx",
+                title = "美味しいきゅうりの塩もみ",
+                imagePath = "images/recipe.png",
+                steps = listOf("きゅうりを切る", "塩をまく", "もむ"),
+                authorName = "クックパド美"
+            )
         )
 
         whenever(recipeDataSource.fetchAll(any(), any())).then {
@@ -45,6 +45,23 @@ class RecipeListInteractorTest {
             assertThat(imagePath).isEqualTo("images/recipe.png")
             assertThat(steps).isEqualTo("きゅうりを切る、塩をまく、もむ")
             assertThat(authorName).isEqualTo("クックパド美")
+        }
+    }
+
+    @Test
+    fun verifyFetchRecipeListError() {
+        val onFailed: (Throwable) -> Unit = mock()
+        val throwable = Throwable("Recipe not found")
+        whenever(recipeDataSource.fetchAll(any(), any())).then {
+            (it.arguments[1] as (Throwable) -> Unit).invoke(throwable)
+        }
+
+        interactor.fetchRecipeList({}, onFailed)
+
+        val argumentCaptor = argumentCaptor<Throwable>()
+        verify(onFailed).invoke(argumentCaptor.capture())
+        argumentCaptor.firstValue.apply {
+            assertThat(message).isEqualTo("Recipe not found")
         }
     }
 }
