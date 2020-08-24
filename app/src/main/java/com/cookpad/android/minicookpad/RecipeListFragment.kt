@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cookpad.android.minicookpad.databinding.FragmentRecipeListBinding
+import com.cookpad.android.minicookpad.datasource.RecipeEntity
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RecipeListFragment : Fragment() {
@@ -39,7 +40,7 @@ class RecipeListFragment : Fragment() {
         db.collection("recipes")
             .get()
             .addOnSuccessListener { result ->
-                adapter.update(result.mapNotNull { Recipe.fromDocument(it) })
+                adapter.update(result.mapNotNull { RecipeEntity.fromDocument(it) })
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "レシピ一覧の取得に失敗しました", Toast.LENGTH_SHORT).show()
