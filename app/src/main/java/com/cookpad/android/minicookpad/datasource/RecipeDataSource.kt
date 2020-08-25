@@ -6,6 +6,6 @@ interface RecipeDataSource {
     fun createRecipe(
         recipe: RecipeEntity,
         onSuccess: () -> Unit,
-        onFailed: (Throwable) -> Unit
+        onFailure: (Throwable) -> Unit
     )
 }

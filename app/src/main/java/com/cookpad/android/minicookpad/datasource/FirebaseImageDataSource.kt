@@ -12,13 +12,13 @@ class FirebaseImageDataSource : ImageDataSource {
     private val reference: StorageReference = FirebaseStorage.getInstance().reference
 
     override fun saveImage(
-        uri: Uri,
+        uri: String,
         onSuccess: (String) -> Unit,
         onFailed: (Throwable) -> Unit
     ) {
         val imageRef = "$COLLECTION_PATH/${UUID.randomUUID()}"
         reference.child(imageRef)
-            .putFile(uri)
+            .putFile(Uri.parse(uri))
             .addOnSuccessListener { onSuccess.invoke(imageRef) }
             .addOnFailureListener(onFailed)
     }

@@ -17,7 +17,7 @@ class RecipeCreateInteractor(
     override fun saveRecipe(
         recipe: RecipeCreateContract.Recipe,
         onSuccess: () -> Unit,
-        onFailed: (Throwable) -> Unit
+        onFailure: (Throwable) -> Unit
     ) {
         imageDataSource.saveImage(
             uri = recipe.imageUri,
@@ -32,10 +32,10 @@ class RecipeCreateInteractor(
                 recipeDataSource.createRecipe(
                     recipe = entity,
                     onSuccess = onSuccess,
-                    onFailed = onFailed
+                    onFailure = onFailure
                 )
             },
-            onFailed = onFailed
+            onFailure = onFailure
         )
     }
 }

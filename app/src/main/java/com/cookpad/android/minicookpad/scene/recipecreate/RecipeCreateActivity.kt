@@ -60,7 +60,7 @@ class RecipeCreateActivity : AppCompatActivity(), RecipeCreateContract.View {
 
         binding.saveButton.setOnClickListener {
             val recipe = RecipeCreateContract.Recipe(
-                imageUri = viewModel.imageUri.value ?: return@setOnClickListener,
+                imageUri = viewModel.imageUri.value.toString(),
                 title = binding.title.text.toString(),
                 steps = listOf(
                     binding.step1.text.toString(),

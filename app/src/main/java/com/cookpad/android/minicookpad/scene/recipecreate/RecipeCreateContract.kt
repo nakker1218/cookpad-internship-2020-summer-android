@@ -23,7 +23,7 @@ interface RecipeCreateContract {
     }
 
     data class Recipe(
-        val imageUri: Uri,
+        val imageUri: String,
         val title: String,
         val steps: List<String>
     )
