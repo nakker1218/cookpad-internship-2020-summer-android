@@ -1,4 +1,4 @@
-package com.cookpad.android.minicookpad.scene.recipelist
+package com.cookpad.android.minicookpad.scene.recipe_list
 
 interface RecipeListContract {
     interface View {

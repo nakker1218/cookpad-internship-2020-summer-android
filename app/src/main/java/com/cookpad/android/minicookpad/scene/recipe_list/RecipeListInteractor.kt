@@ -1,4 +1,4 @@
-package com.cookpad.android.minicookpad.scene.recipelist
+package com.cookpad.android.minicookpad.scene.recipe_list
 
 import com.cookpad.android.minicookpad.datasource.RecipeDataSource
 import com.cookpad.android.minicookpad.datasource.RecipeEntity

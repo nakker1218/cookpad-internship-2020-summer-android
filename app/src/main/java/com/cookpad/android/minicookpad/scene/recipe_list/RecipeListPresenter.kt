@@ -1,4 +1,4 @@
-package com.cookpad.android.minicookpad.scene.recipelist
+package com.cookpad.android.minicookpad.scene.recipe_list
 
 class RecipeListPresenter(
     private val view: RecipeListContract.View,

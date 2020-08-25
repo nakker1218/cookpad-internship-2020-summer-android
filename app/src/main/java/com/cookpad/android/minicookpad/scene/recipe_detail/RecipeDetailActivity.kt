@@ -1,4 +1,4 @@
-package com.cookpad.android.minicookpad
+package com.cookpad.android.minicookpad.scene.recipe_detail
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
 import com.bumptech.glide.Glide
+import com.cookpad.android.minicookpad.RecipeDetailActivityArgs
 import com.cookpad.android.minicookpad.databinding.ActivityRecipeDetailBinding
 import com.cookpad.android.minicookpad.datasource.RecipeEntity
 import com.google.firebase.firestore.FirebaseFirestore

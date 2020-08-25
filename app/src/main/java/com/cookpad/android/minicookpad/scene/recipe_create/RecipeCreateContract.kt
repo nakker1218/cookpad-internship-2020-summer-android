@@ -1,6 +1,4 @@
-package com.cookpad.android.minicookpad.scene.recipecreate
-
-import android.net.Uri
+package com.cookpad.android.minicookpad.scene.recipe_create
 
 /**
  * @author nakker

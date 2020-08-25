@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.cookpad.android.minicookpad.LoginFragment"
+        android:name="com.cookpad.android.minicookpad.scene.login.LoginFragment"
         android:label="LoginFragment"
         >
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/recipeListFragment"
-        android:name="com.cookpad.android.minicookpad.RecipeListFragment"
+        android:name="com.cookpad.android.minicookpad.scene.recipe_list.RecipeListFragment"
         android:label="RecipeListFragment"
         tools:layout="@layout/fragment_recipe_list"
         >
@@ -33,7 +33,7 @@
 
     <activity
         android:id="@+id/recipeDetailActivity"
-        android:name="com.cookpad.android.minicookpad.RecipeDetailActivity"
+        android:name="com.cookpad.android.minicookpad.scene.recipe_detail.RecipeDetailActivity"
         android:label="RecipeDetailActivity">
         <argument
             android:name="recipeId"
@@ -45,7 +45,7 @@
 
     <activity
         android:id="@+id/recipeCreateActivity"
-        android:name="com.cookpad.android.minicookpad.scene.recipecreate.RecipeCreateActivity"
+        android:name="com.cookpad.android.minicookpad.scene.recipe_create.RecipeCreateActivity"
         android:label="RecipeCreateActivity" />
 
 </navigation>

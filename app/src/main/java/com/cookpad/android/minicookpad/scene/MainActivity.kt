@@ -1,7 +1,8 @@
-package com.cookpad.android.minicookpad
+package com.cookpad.android.minicookpad.scene
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.cookpad.android.minicookpad.R
 import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {

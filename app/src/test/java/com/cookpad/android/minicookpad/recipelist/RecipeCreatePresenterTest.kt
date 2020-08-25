@@ -1,7 +1,7 @@
 package com.cookpad.android.minicookpad.recipelist
 
-import com.cookpad.android.minicookpad.scene.recipecreate.RecipeCreateContract
-import com.cookpad.android.minicookpad.scene.recipecreate.RecipeCreatePresenter
+import com.cookpad.android.minicookpad.scene.recipe_create.RecipeCreateContract
+import com.cookpad.android.minicookpad.scene.recipe_create.RecipeCreatePresenter
 import com.nhaarman.mockitokotlin2.*
 import org.junit.Before
 import org.junit.Test

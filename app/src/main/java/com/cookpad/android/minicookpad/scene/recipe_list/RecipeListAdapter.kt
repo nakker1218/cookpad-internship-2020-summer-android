@@ -1,12 +1,12 @@
-package com.cookpad.android.minicookpad
+package com.cookpad.android.minicookpad.scene.recipe_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.cookpad.android.minicookpad.R
 import com.cookpad.android.minicookpad.databinding.ListitemRecipeBinding
-import com.cookpad.android.minicookpad.scene.recipelist.RecipeListContract
 import com.google.firebase.storage.FirebaseStorage
 
 typealias OnRecipeClickListener = (String, String) -> Unit
@@ -20,7 +20,7 @@ class RecipeListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val binding = ListitemRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecipeViewHolder(
-                binding
+            binding
         )
     }
 
@@ -31,15 +31,15 @@ class RecipeListAdapter(
     override fun getItemCount(): Int = recipeList.size
 
     override fun getItemViewType(position: Int): Int =
-            R.layout.listitem_recipe
+        R.layout.listitem_recipe
 
     fun update(recipeList: List<RecipeListContract.Recipe>) {
         DiffUtil
                 .calculateDiff(
-                        RecipeDiffCallback(
-                                this.recipeList,
-                                recipeList
-                        )
+                    RecipeDiffCallback(
+                        this.recipeList,
+                        recipeList
+                    )
                 )
                 .dispatchUpdatesTo(this)
         this.recipeList = recipeList

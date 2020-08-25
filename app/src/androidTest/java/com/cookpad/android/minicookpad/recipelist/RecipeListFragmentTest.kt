@@ -7,8 +7,8 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cookpad.android.minicookpad.R
-import com.cookpad.android.minicookpad.RecipeListFragment
-import com.cookpad.android.minicookpad.scene.recipelist.RecipeListContract
+import com.cookpad.android.minicookpad.scene.recipe_list.RecipeListFragment
+import com.cookpad.android.minicookpad.scene.recipe_list.RecipeListContract
 import com.nhaarman.mockitokotlin2.*
 import org.junit.Before
 import org.junit.Test

@@ -2,8 +2,8 @@ package com.cookpad.android.minicookpad.recipelist
 
 import com.cookpad.android.minicookpad.datasource.RecipeDataSource
 import com.cookpad.android.minicookpad.datasource.RecipeEntity
-import com.cookpad.android.minicookpad.scene.recipelist.RecipeListContract
-import com.cookpad.android.minicookpad.scene.recipelist.RecipeListInteractor
+import com.cookpad.android.minicookpad.scene.recipe_list.RecipeListContract
+import com.cookpad.android.minicookpad.scene.recipe_list.RecipeListInteractor
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.*
 import org.junit.Before

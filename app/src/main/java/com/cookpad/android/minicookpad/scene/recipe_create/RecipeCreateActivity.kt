@@ -1,4 +1,4 @@
-package com.cookpad.android.minicookpad.scene.recipecreate
+package com.cookpad.android.minicookpad.scene.recipe_create
 
 import android.content.Context
 import android.content.Intent
@@ -10,9 +10,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.cookpad.android.minicookpad.RecipeCreateViewModel
 import com.cookpad.android.minicookpad.databinding.ActivityRecipeCreateBinding
 import com.cookpad.android.minicookpad.datasource.FirebaseImageDataSource
 import com.cookpad.android.minicookpad.datasource.FirebaseRecipeDataSource

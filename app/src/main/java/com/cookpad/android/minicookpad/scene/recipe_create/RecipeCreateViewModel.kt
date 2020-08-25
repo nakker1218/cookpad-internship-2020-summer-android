@@ -1,4 +1,4 @@
-package com.cookpad.android.minicookpad
+package com.cookpad.android.minicookpad.scene.recipe_create
 
 import android.net.Uri
 import androidx.lifecycle.LiveData

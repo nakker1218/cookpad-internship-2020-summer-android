@@ -1,4 +1,4 @@
-package com.cookpad.android.minicookpad.scene.recipecreate
+package com.cookpad.android.minicookpad.scene.recipe_create
 
 /**
  * @author nakker

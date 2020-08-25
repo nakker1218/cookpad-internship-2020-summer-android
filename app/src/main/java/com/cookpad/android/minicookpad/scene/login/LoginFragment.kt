@@ -1,4 +1,4 @@
-package com.cookpad.android.minicookpad
+package com.cookpad.android.minicookpad.scene.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
