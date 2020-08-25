@@ -1,14 +1,14 @@
-package com.cookpad.android.minicookpad.datasource
+package com.cookpad.android.minicookpad.datasource.entity
 
 import com.google.firebase.firestore.DocumentSnapshot
 import java.security.SecureRandom
 
 data class RecipeEntity(
-        val id: String = generateId(),
-        val title: String,
-        val imagePath: String?,
-        val steps: List<String>,
-        val authorName: String
+    val id: String = generateId(),
+    val title: String,
+    val imagePath: String?,
+    val steps: List<String>,
+    val authorName: String
 ) {
     fun toMap(): Map<String, Any?> = hashMapOf(
         "title" to title,
@@ -25,11 +25,11 @@ data class RecipeEntity(
                     ?: emptyList()
 
                 RecipeEntity(
-                        id = document.id,
-                        title = document["title"] as String,
-                        imagePath = document["imagePath"] as? String,
-                        steps = steps,
-                        authorName = document["authorName"] as String
+                    id = document.id,
+                    title = document["title"] as String,
+                    imagePath = document["imagePath"] as? String,
+                    steps = steps,
+                    authorName = document["authorName"] as String
                 )
             } catch (e: Exception) {
                 null
@@ -42,7 +42,9 @@ data class RecipeEntity(
         private fun generateId(): String {
             val rand = SecureRandom()
             val sb = StringBuilder().apply {
-                repeat(ID_LENGTH) { append(ID_PATTERN[rand.nextInt(ID_PATTERN.length)]) }
+                repeat(ID_LENGTH) { append(
+                    ID_PATTERN[rand.nextInt(
+                        ID_PATTERN.length)]) }
             }
             return sb.toString()
         }

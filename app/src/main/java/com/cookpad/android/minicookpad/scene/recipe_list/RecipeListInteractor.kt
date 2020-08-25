@@ -1,7 +1,7 @@
 package com.cookpad.android.minicookpad.scene.recipe_list
 
 import com.cookpad.android.minicookpad.datasource.RecipeDataSource
-import com.cookpad.android.minicookpad.datasource.RecipeEntity
+import com.cookpad.android.minicookpad.datasource.entity.RecipeEntity
 
 class RecipeListInteractor(private val recipeDataSource: RecipeDataSource) :
     RecipeListContract.Interactor {

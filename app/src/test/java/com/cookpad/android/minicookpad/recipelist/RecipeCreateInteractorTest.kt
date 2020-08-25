@@ -2,7 +2,7 @@ package com.cookpad.android.minicookpad.recipelist
 
 import com.cookpad.android.minicookpad.datasource.ImageDataSource
 import com.cookpad.android.minicookpad.datasource.RecipeDataSource
-import com.cookpad.android.minicookpad.datasource.RecipeEntity
+import com.cookpad.android.minicookpad.datasource.entity.RecipeEntity
 import com.cookpad.android.minicookpad.scene.recipe_create.RecipeCreateContract
 import com.cookpad.android.minicookpad.scene.recipe_create.RecipeCreateInteractor
 import com.google.common.truth.Truth.assertThat

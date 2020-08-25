@@ -1,5 +1,6 @@
 package com.cookpad.android.minicookpad.datasource
 
+import com.cookpad.android.minicookpad.datasource.entity.RecipeEntity
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FirebaseRecipeDataSource : RecipeDataSource {
